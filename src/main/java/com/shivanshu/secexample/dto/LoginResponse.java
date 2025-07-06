@@ -1,6 +1,6 @@
 package com.shivanshu.secexample.dto;
 
-import org.springframework.http.HttpStatus;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BaseDTO<T> {
-    private String message;
-    private HttpStatus statusCode;
-    private T data;
+public class LoginResponse {
+    private String jwtToken;
+
+    private String username;
+    private List<String> roles;
 }

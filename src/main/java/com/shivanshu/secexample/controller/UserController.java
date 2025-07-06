@@ -3,67 +3,22 @@ package com.shivanshu.secexample.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.shivanshu.secexample.dto.BaseDTO;
 import com.shivanshu.secexample.dto.UserDTO;
-import com.shivanshu.secexample.service.UserService;
 
-import lombok.extern.slf4j.Slf4j;
+public interface UserController {
+    public ResponseEntity<BaseDTO<List<UserDTO>>> getAllUsers();
 
-@RestController
-@Slf4j
-@RequestMapping("/api")
-public class UserController {
-    @Autowired
-    UserService userService;
+    public ResponseEntity<BaseDTO<UserDTO>> getUserById(Long id);
 
-    @GetMapping("/users")
-    public ResponseEntity<BaseDTO<List<UserDTO>>> getAllUsers() {
-        BaseDTO<List<UserDTO>> users = userService.getAllUsers();
-        return ResponseEntity
-                .status(users.getStatusCode())
-                .body(users);
-    }
+    public ResponseEntity<BaseDTO<UserDTO>> createUser(UserDTO userDTO);
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<BaseDTO<UserDTO>> getUserById(@PathVariable Long id) {
-        BaseDTO<UserDTO> user = userService.getUserById(id);
-        return ResponseEntity
-                .status(user.getStatusCode())
-                .body(user);
-    }
+    public ResponseEntity<BaseDTO<UserDTO>> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> userDTO);
 
-    @PostMapping("/users")
-    public ResponseEntity<BaseDTO<UserDTO>> createUser(@RequestBody UserDTO userDTO) {
-        BaseDTO<UserDTO> user = userService.createUser(userDTO);
-        return ResponseEntity
-                .status(user.getStatusCode())
-                .body(user);
-    }
+    public ResponseEntity<BaseDTO<Long>> deleteUser(@PathVariable Long id);
 
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<BaseDTO<UserDTO>> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> userDTO) {
-        BaseDTO<UserDTO> user = userService.updateUser(id, userDTO);
-        return ResponseEntity
-                .status(user.getStatusCode())
-                .body(user);
-    }
-
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<BaseDTO<Long>> deleteUser(@PathVariable Long id) {
-        BaseDTO<Long> userId = userService.deleteUser(id);
-        return ResponseEntity
-                .status(userId.getStatusCode())
-                .body(userId);
-    }
 }
